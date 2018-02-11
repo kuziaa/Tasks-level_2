@@ -20,12 +20,20 @@ public class Task_1 {
             String[] n_line_mass = n_line.split(" ");
             for(int i = 0; i < f_line_mass.length; i++) {
                 for(int j = 0; j < n_line_mass.length; j++) {
-                    Pattern p = Pattern.compile(f_line_mass[i]);
-                    Matcher m = p.matcher(n_line_mass[j]);
-                    if(m.matches() == true) {
-                        System.out.println(n_line);
-                        x = 1;                             // Если соответствие найдено, переходим к следующей строке
-                        break;
+                    try {                                             // Если аргумент можно рассматривать как
+                        Pattern p = Pattern.compile(f_line_mass[i]);  // регулярное выражение, работаем с ним как
+                        Matcher m = p.matcher(n_line_mass[j]);        // с регулярным выражением.
+                        if(m.matches() == true) {
+                            System.out.println(n_line);
+                            x = 1;
+                            break;
+                        }
+                    }
+                    catch (PatternSyntaxException e) {                // В противном случае, работаем с ник как
+                        if(n_line_mass[j].equals(f_line_mass[i])) {   // с обычной строкой
+                            System.out.println(n_line);
+                            x = 1;
+                        }
                     }
                 }
                 if(x == 1) break;
